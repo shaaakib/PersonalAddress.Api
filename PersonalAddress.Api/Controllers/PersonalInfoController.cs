@@ -87,5 +87,44 @@ namespace PersonalAddress.Api.Controllers
 
             return CreatedAtAction(nameof(getInfoById), new {id = personalInfo.Id}, resDto);
         }
+
+        [HttpPut("UpdateInfo/{id:int}")]
+        public async Task<IActionResult> UpdateInfo([FromBody]UpdatePersonalInfoDto objDto, int id)
+        {
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+
+            var data = await _db.PersonalInfo.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(data == null) return NotFound(new { message = $"Record with Id = {id} not found." });
+
+            data.FirstName = objDto.FirstName;
+            data.LastName = objDto.LastName;
+            data.Email = objDto.Email;
+            data.Phone = objDto.Phone;
+
+            await _db.SaveChangesAsync();
+
+            return Ok(data);
+        }
+
+        [HttpDelete("DeleteInfoById/{id:int}")]
+        public async Task<IActionResult> DeleteInfoById(int id)
+        {
+            var data = await _db.PersonalInfo.FirstOrDefaultAsync(x => x.Id == id);
+            if (data == null)
+                return NotFound(new { message = $"Record with Id = {id} not found." });
+
+            _db.PersonalInfo.Remove(data);
+            await _db.SaveChangesAsync();
+
+            var response = new DeleteResponseDto
+            {
+                Message = $"Record with Id = {id} deleted successfully.",
+                DeletedId = id
+            };
+
+            return Ok(response);
+        }
+
     }
 }
