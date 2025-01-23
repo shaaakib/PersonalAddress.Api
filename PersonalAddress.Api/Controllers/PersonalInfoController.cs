@@ -29,9 +29,10 @@ namespace PersonalAddress.Api.Controllers
 
             var listInfo = data.Select(item => new PersonalInfoDto
             {
-                Id = item.Id,
-                Name = item.FirstName,
-                Email = item.Email
+                FirstName = item.FirstName,
+                //LastName = item.LastName,
+                Email = item.Email,
+                Phone = item.Phone,
 
             });
 
@@ -50,9 +51,10 @@ namespace PersonalAddress.Api.Controllers
 
             var res = new PersonalInfoDto()
             {
-                Id = singalRecord.Id,
-                Name = singalRecord.FirstName,
-                Email = singalRecord.Email
+                FirstName = singalRecord.FirstName,
+                //LastName = singalRecord.LastName,
+                Email = singalRecord.Email,
+                Phone = singalRecord.Phone,
             };
 
             return Ok(res);
