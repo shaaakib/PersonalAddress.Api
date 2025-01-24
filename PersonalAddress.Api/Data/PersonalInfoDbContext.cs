@@ -11,14 +11,23 @@ namespace PersonalAddress.Api.Data
         public DbSet<PersonalInfoAddress> PersonalInfoAddress { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Profile> Profiles { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Course> Courses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure One-to-One Relationship
             modelBuilder.Entity<User>()
-                .HasOne(u => u.Profile) // User has one Profile
-                .WithOne(p => p.User)   // Profile has one User
-                .HasForeignKey<Profile>(p => p.UserId); // Foreign Key
+                .HasOne(u => u.Profile) 
+                .WithOne(p => p.User)   
+                .HasForeignKey<Profile>(p => p.UserId);
+
+            // Configure One-to-Many Relationship
+            modelBuilder.Entity<Student>()
+                .HasMany(s => s.Courses)
+                .WithOne(c => c.Student)
+                .HasForeignKey(c => c.StudentId);
+
         }
     }
 }
