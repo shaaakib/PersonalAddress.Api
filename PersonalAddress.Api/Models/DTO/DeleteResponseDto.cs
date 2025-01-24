@@ -3,7 +3,7 @@
     public class DeleteResponseDto
     {
         public string Message { get; set; }
-        public int DeletedId { get; set; }
+        public int Id { get; set; }
     }
 
 }

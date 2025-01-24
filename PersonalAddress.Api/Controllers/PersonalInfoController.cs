@@ -122,7 +122,7 @@ namespace PersonalAddress.Api.Controllers
             var response = new DeleteResponseDto
             {
                 Message = $"Record with Id = {id} deleted successfully.",
-                DeletedId = id
+                Id = id
             };
 
             return Ok(response);
